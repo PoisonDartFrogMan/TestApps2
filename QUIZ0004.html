@@ -1,1 +1,190 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>テスト対策用問題</title>
+</head>
+<body>
+    <h2>テスト対策用問題 - 練習問題</h2>
 
+    <button onclick="goToIndex()">目次</button>
+    
+    <div id="quiz-container">
+        <p id="question">Q1. G7サミットで採択されたウクライナ支援策に含まれる主な内容として正しいものを選びなさい。</p>
+        <ul>
+            <li><input type="radio" name="answer" value="1"> ウクライナへの直接的な武力支援</li>
+            <li><input type="radio" name="answer" value="2"> ロシアに対する経済制裁や輸出管理の強化</li>
+            <li><input type="radio" name="answer" value="3"> NATOによるウクライナへの即時加盟承認</li>
+            <li><input type="radio" name="answer" value="4"> 国連でのウクライナ問題の議論停止</li>
+        </ul>
+        <button onclick="checkAnswer()">解答</button>
+        <p id="result"></p>
+        <button id="next-question" style="display: none;" onclick="nextQuestion()">次へ</button>
+    </div>
+
+    <script>
+        let currentQuestionIndex = 0;
+        let correctAnswers = 0;
+        const questions = [
+            {
+                question: "G7サミットで採択されたウクライナ支援策に含まれる主な内容として正しいものを選びなさい。",
+                choices: [
+                    "ウクライナへの直接的な武力支援",
+                    "ロシアに対する経済制裁や輸出管理の強化",
+                    "NATOによるウクライナへの即時加盟承認",
+                    "国連でのウクライナ問題の議論停止"
+                ],
+                answer: 2,
+                explanation: "G7サミットでは、ウクライナ支援策としてロシアに対する厳しい制裁が議論されました。経済制裁や輸出管理の強化が主な内容です。"
+            },
+            {
+                question: "イランの政治体制において、最高指導者と大統領の違いとして正しいものを選びなさい。",
+                choices: [
+                    "最高指導者は軍を指揮し、大統領は経済政策を主導する",
+                    "大統領は宗教関連の問題を決定し、最高指導者は国際関係を担当する",
+                    "最高指導者が選挙で選ばれ、大統領は任命制である",
+                    "両者は全く同じ権限を持つ"
+                ],
+                answer: 1,
+                explanation: "イランでは最高指導者が軍や外交を統括し、大統領は経済や行政を担当します。最高指導者の権限が大統領より上です。"
+            },
+            {
+                question: "台湾総統選挙で当選した頼清徳氏の立場として正しいものを選びなさい。",
+                choices: [
+                    "台湾の中国統一を推進する立場",
+                    "台湾の独立性を強調する立場",
+                    "中国とアメリカの中立を保つ立場",
+                    "台湾の国連加盟を否定する立場"
+                ],
+                answer: 2,
+                explanation: "頼清徳氏は、台湾の独立性を重視する立場をとっています。中国との対立が懸念されています。"
+            },
+            {
+                question: "貿易摩擦が世界経済に与える影響として適切なものを選びなさい。",
+                choices: [
+                    "貿易摩擦は経済成長を促進する",
+                    "国家間の経済関係を強化する",
+                    "貿易摩擦は国際的な経済の不安定化を招く",
+                    "世界経済にはほとんど影響を与えない"
+                ],
+                answer: 3,
+                explanation: "貿易摩擦は国家間の経済関係に悪影響を与え、世界経済全体の不安定化を招きます。"
+            },
+            {
+                question: "ブラジルの大統領制の特徴として正しいものを選びなさい。",
+                choices: [
+                    "大統領は議会から選ばれる",
+                    "大統領は行政の最高責任者である",
+                    "大統領は国王の承認を受けて就任する",
+                    "大統領は議会と同じ権限を持つ"
+                ],
+                answer: 2,
+                explanation: "ブラジルの大統領制では、大統領が行政を統括する最高責任者です。"
+            },
+            {
+                question: "G7の構成国に含まれない国を選びなさい。",
+                choices: [
+                    "日本",
+                    "ドイツ",
+                    "中国",
+                    "イタリア"
+                ],
+                answer: 3,
+                explanation: "G7はアメリカ、カナダ、日本、ドイツ、フランス、イギリス、イタリアで構成されており、中国は含まれていません。"
+            },
+            {
+                question: "イラン大統領の死亡事件に関連して、航空安全の課題として正しいものを選びなさい。",
+                choices: [
+                    "航空安全は気象条件と関係がない",
+                    "航空機の老朽化や整備不足が事故の原因となることがある",
+                    "大統領専用機は事故を起こさない",
+                    "航空事故は国際社会に影響を与えない"
+                ],
+                answer: 2,
+                explanation: "航空安全の課題には、整備不足や航空機の老朽化が含まれます。天候も重要な影響要因です。"
+            },
+            {
+                question: "台湾の政治体制における総統の役割として正しいものを選びなさい。",
+                choices: [
+                    "総統は立法機関の長である",
+                    "総統は台湾の行政を統括する最高責任者である",
+                    "総統は裁判所の最高責任者である",
+                    "総統は防衛政策に関与しない"
+                ],
+                answer: 2,
+                explanation: "台湾の総統は行政のトップであり、政策決定や防衛を統括します。"
+            },
+            {
+                question: "中国とアメリカの貿易摩擦が激化した理由として適切なものを選びなさい。",
+                choices: [
+                    "両国の経済関係が強化されたため",
+                    "アメリカが中国製品に新たな関税を課したため",
+                    "中国がアメリカからの輸入を拡大したため",
+                    "貿易摩擦は両国間の友好関係を強化するため"
+                ],
+                answer: 2,
+                explanation: "貿易摩擦の原因は、アメリカが中国製品に高関税を課す措置を導入したことです。"
+            },
+            {
+                question: "ブラジルのルラ大統領が掲げる経済政策として正しいものを選びなさい。",
+                choices: [
+                    "富裕層への減税を推進する",
+                    "社会福祉の充実と格差の是正を目指す",
+                    "農業生産の縮小を目指す",
+                    "国際貿易を縮小する政策を採用する"
+                ],
+                answer: 2,
+                explanation: "ルラ大統領は格差是正と福祉の充実を掲げ、ブラジルの社会政策を進めています。"
+            }
+        ];
+
+        function loadQuestion() {
+            const questionElement = document.getElementById('question');
+            const choicesElements = document.querySelectorAll('#quiz-container ul li input');
+
+            const currentQuestion = questions[currentQuestionIndex];
+            questionElement.textContent = `Q${currentQuestionIndex + 1}. ${currentQuestion.question}`;
+            choicesElements.forEach((input, index) => {
+                input.nextSibling.textContent = ` ${currentQuestion.choices[index]}`;
+            });
+        }
+
+        function checkAnswer() {
+            const selectedAnswer = document.querySelector('input[name="answer"]:checked');
+            const resultElement = document.getElementById('result');
+            if (!selectedAnswer) {
+                resultElement.textContent = "回答を選んでください。";
+                return;
+            }
+
+            const userAnswer = parseInt(selectedAnswer.value);
+            const currentQuestion = questions[currentQuestionIndex];
+
+            if (userAnswer === currentQuestion.answer) {
+                correctAnswers++;
+                resultElement.textContent = `正解です！ 解説: ${currentQuestion.explanation}`;
+                document.getElementById('next-question').style.display = 'block';
+            } else {
+                resultElement.textContent = "不正解です。";
+             }
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex++;
+            if (currentQuestionIndex < questions.length) {
+                document.getElementById('next-question').style.display = 'none';
+                document.getElementById('result').textContent = '';
+                loadQuestion();
+            } else {
+                document.getElementById('quiz-container').innerHTML = `<p>${questions.length}問中${correctAnswers}問正解</p>`;
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', loadQuestion);
+        function goToIndex() {
+        window.location.href = '/TestApps2/index.html';
+    }
+    </script>
+</body>
+</html>
