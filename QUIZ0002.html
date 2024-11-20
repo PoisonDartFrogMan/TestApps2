@@ -1,1 +1,191 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>テスト対策用問題</title>
+</head>
+<body>
+    <h2>テスト対策用問題 - 練習問題</h2>
+
+    <button onclick="goToIndex()">目次</button>
+    
+    <div id="quiz-container">
+        <p id="question">Q1. 選択的夫婦別姓とは、結婚後も夫婦それぞれが何を維持できる制度ですか？</p>
+        <ul>
+            <li><input type="radio" name="answer" value="1"> 家庭</li>
+            <li><input type="radio" name="answer" value="2"> 仕事</li>
+            <li><input type="radio" name="answer" value="3"> 名字</li>
+            <li><input type="radio" name="answer" value="4"> 住所</li>
+        </ul>
+        <button onclick="checkAnswer()">解答</button>
+        <p id="result"></p>
+        <button id="next-question" style="display: none;" onclick="nextQuestion()">次へ</button>
+    </div>
+
+    <script>
+        let currentQuestionIndex = 0;
+        let correctAnswers = 0;
+        const questions = [
+            {
+                question: "選択的夫婦別姓とは、結婚後も夫婦それぞれが何を維持できる制度ですか？",
+                choices: [
+                    "家庭",
+                    "仕事",
+                    "名字",
+                    "住所"
+                ],
+                answer: 3,
+                explanation: "選択的夫婦別姓では、結婚後も夫婦それぞれが自分の名字を使い続けることが可能になります。"
+            },
+            {
+                question: "選択的夫婦別姓の導入を提言した経済団体の名前は次のうちどれですか？",
+                choices: [
+                    "経済同友会",
+                    "日本経済団体連合会（経団連）",
+                    "日本商工会議所",
+                    "全国中小企業団体"
+                ],
+                answer: 2,
+                explanation: "経団連は「名字を変えるルールが不便」として、選択的夫婦別姓の導入を提言しました。"
+            },
+            {
+                question: "2024年、京都アニメーション放火事件の裁判で青葉真司被告に下された刑罰は次のうちどれですか？",
+                choices: [
+                    "懲役20年",
+                    "終身刑",
+                    "死刑",
+                    "禁錮10年"
+                ],
+                answer: 3,
+                explanation: "京都アニメーション放火事件で青葉真司被告には死刑判決が下されました。"
+            },
+            {
+                question: "この事件が注目された理由として正しくないものを選びなさい。",
+                choices: [
+                    "犯罪被害者への支援が議論されたこと",
+                    "アニメ業界への大きな影響があったこと",
+                    "死刑制度そのものへの批判が広がったこと",
+                    "青葉真司被告がアニメ制作者だったこと"
+                ],
+                answer: 4,
+                explanation: "青葉被告はアニメ制作者ではなく、この事件は犯罪被害者支援や死刑制度を巡る議論が注目されました。"
+            },
+            {
+                question: "2024年の東京都知事選挙で、立候補者数は過去最多の何人でしたか？",
+                choices: [
+                    "30人",
+                    "45人",
+                    "56人",
+                    "60人"
+                ],
+                answer: 3,
+                explanation: "2024年の東京都知事選挙には過去最多の56人が立候補しました。"
+            },
+            {
+                question: "東京都知事選挙が日本全体に影響を与える理由として最も適切なものは次のうちどれですか？",
+                choices: [
+                    "首都東京のトップを決める選挙だから",
+                    "投票率が全国一高いから",
+                    "全国すべての都道府県知事が選ばれるきっかけになるから",
+                    "東京の人口が少ないから"
+                ],
+                answer: 1,
+                explanation: "東京の政策は日本全体にも影響を与えるため、注目されます。"
+            },
+            {
+                question: "児童対象性暴力防止法で新たに導入された制度「日本版DBS」の目的は何ですか？",
+                choices: [
+                    "子どもの学力向上",
+                    "性犯罪歴がある人が教育現場で働くのを防ぐ",
+                    "保育施設の安全基準を高める",
+                    "子どもの医療費を無料化する"
+                ],
+                answer: 2,
+                explanation: "児童対象性暴力防止法では、日本版DBSを通じて性犯罪歴の確認を行います。"
+            },
+            {
+                question: "日本版DBSはどのような場面で活用されますか？",
+                choices: [
+                    "保育士や教師の採用時",
+                    "病院での新入社員採用時",
+                    "選挙の立候補者確認時",
+                    "公務員の昇進審査時"
+                ],
+                answer: 1,
+                explanation: "日本版DBSは教育や保育の現場で働く人の過去の確認に使われます。"
+            },
+            {
+                question: "金融庁が三菱UFJ銀行に業務改善命令を出した理由は何ですか？",
+                choices: [
+                    "過剰な融資を行ったから",
+                    "顧客の非公開情報を違法に共有したから",
+                    "利用者からの預金を適切に管理しなかったから",
+                    "国際取引でのルール違反があったから"
+                ],
+                answer: 2,
+                explanation: "三菱UFJ銀行は顧客の非公開情報を共有し、金融庁から業務改善命令を受けました。"
+            },
+            {
+                question: "金融庁の役割に含まれるものとして正しいものを選びなさい。",
+                choices: [
+                    "国の税金を管理する",
+                    "金融機関がルールを守っているか監督する",
+                    "企業の株式上場を承認する",
+                    "個人間の金銭トラブルを調停する"
+                ],
+                answer: 2,
+                explanation: "金融庁は金融機関が法律や規制を守っているかを監督する役割を持ちます。"
+            }
+        ];
+
+        function loadQuestion() {
+            const questionElement = document.getElementById('question');
+            const choicesElements = document.querySelectorAll('#quiz-container ul li input');
+
+            const currentQuestion = questions[currentQuestionIndex];
+            questionElement.textContent = `Q${currentQuestionIndex + 1}. ${currentQuestion.question}`;
+            choicesElements.forEach((input, index) => {
+                input.nextSibling.textContent = ` ${currentQuestion.choices[index]}`;
+            });
+        }
+
+        function checkAnswer() {
+            const selectedAnswer = document.querySelector('input[name="answer"]:checked');
+            const resultElement = document.getElementById('result');
+            if (!selectedAnswer) {
+                resultElement.textContent = "回答を選んでください。";
+                return;
+            }
+
+            const userAnswer = parseInt(selectedAnswer.value);
+            const currentQuestion = questions[currentQuestionIndex];
+
+            if (userAnswer === currentQuestion.answer) {
+                correctAnswers++;
+                resultElement.textContent = `正解です！ 解説: ${currentQuestion.explanation}`;
+                document.getElementById('next-question').style.display = 'block';
+            } else {
+                resultElement.textContent = "不正解です。";
+             }
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex++;
+            if (currentQuestionIndex < questions.length) {
+                document.getElementById('next-question').style.display = 'none';
+                document.getElementById('result').textContent = '';
+                loadQuestion();
+            } else {
+                document.getElementById('quiz-container').innerHTML = `<p>${questions.length}問中${correctAnswers}問正解</p>`;
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', loadQuestion);
+        function goToIndex() {
+        window.location.href = '/TestApps2/index.html';
+    }
+    </script>
+</body>
+</html>
 
