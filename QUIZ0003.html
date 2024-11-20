@@ -158,4 +158,35 @@
                 return;
             }
 
+            const userAnswer = parseInt(selectedAnswer.value);
+            const currentQuestion = questions[currentQuestionIndex];
+
+            if (userAnswer === currentQuestion.answer) {
+                correctAnswers++;
+                resultElement.textContent = `正解です！ 解説: ${currentQuestion.explanation}`;
+                document.getElementById('next-question').style.display = 'block';
+            } else {
+                resultElement.textContent = "不正解です。";
+             }
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex++;
+            if (currentQuestionIndex < questions.length) {
+                document.getElementById('next-question').style.display = 'none';
+                document.getElementById('result').textContent = '';
+                loadQuestion();
+            } else {
+                document.getElementById('quiz-container').innerHTML = `<p>${questions.length}問中${correctAnswers}問正解</p>`;
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', loadQuestion);
+        function goToIndex() {
+        window.location.href = '/TestApps2/index.html';
+    }
+    </script>
+</body>
+</html>
+
 
