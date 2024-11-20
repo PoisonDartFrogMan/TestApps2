@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>金融の自由化 (近年の金融政策)②</title>
+</head>
+<body>
+    <h2>インフレとデフレ - 練習問題</h2>
+
+    <button onclick="goToIndex()">目次</button>
+    <button onclick="openText()">テキスト</button>
+    
+    <div id="quiz-container">
+        <p id="question">Q. インフレが進むとどうなるか、正しいものを1つ選びなさい。</p>
+        <ul>
+            <li><input type="radio" name="answer" value="1"> 物価が下がり、お金の価値が上がる。</li>
+            <li><input type="radio" name="answer" value="2"> 物価が上がり、お金の価値が下がる。</li>
+            <li><input type="radio" name="answer" value="3"> 物価もお金の価値も両方上がる。</li>
+            <li><input type="radio" name="answer" value="4"> 物価が上がり、お金の価値が変わらない。</li>
+        </ul>
+        <button onclick="checkAnswer()">解答</button>
+        <p id="result"></p>
+        <button id="next-question" style="display: none;" onclick="nextQuestion()">次へ</button>
+    </div>
+
+    <script>
+        let currentQuestionIndex = 0;
+        let correctAnswers = 0;
+        const questions = [
+            {
+                question: "インフレが進むとどうなるか、正しいものを1つ選びなさい。",
+                choices: [
+                    "物価が下がり、お金の価値が上がる。",
+                    "物価が上がり、お金の価値が下がる。",
+                    "物価もお金の価値も両方上がる。",
+                    "物価が上がり、お金の価値が変わらない。"
+                ],
+                answer: 2,
+                explanation: "インフレとは、物価が上がってお金の価値が下がることです。たくさんのお金を出さないと同じものが買えなくなります。"
+            },
+            {
+                question: "1,000円で買えるジュースの本数が10本から5本に減った。この状態を何というか？",
+                choices: [
+                    "インフレーション",
+                    "デフレーション",
+                    "スタグフレーション",
+                    "デフレスパイラル"
+                ],
+                answer: 1,
+                explanation: "物価が上がり、1,000円で買えるものが減るのはインフレの特徴です。デフレは逆に物価が下がり、お金の価値が上がります。"
+            },
+            {
+                question: "インフレが進むと得をする人は誰か？正しいものを1つ選びなさい。",
+                choices: [
+                    "貯金をしている人",
+                    "借金をしている人",
+                    "物を買わない人",
+                    "給料が下がった人"
+                ],
+                answer: 2,
+                explanation: "インフレではお金の価値が下がるため、借金をしている人は実質的に返済の負担が軽くなります。貯金をしている人は逆に損をします。"
+            },
+            {
+                question: "デフレが進むと損をする人は誰か？正しいものを1つ選びなさい。",
+                choices: [
+                    "借金をしている人",
+                    "貯金をしている人",
+                    "物を買わない人",
+                    "物価に影響を受けない人"
+                ],
+                answer: 1,
+                explanation: "デフレではお金の価値が上がるため、借金をしている人は返済の負担が重くなります。貯金をしている人は得をします。"
+            },
+            {
+                question: "1,000円で20本のジュースが買えたが、今では10本しか買えなくなった。この場合、次のどれに当てはまるか？",
+                choices: [
+                    "デフレでお金の価値が上がった",
+                    "デフレでお金の価値が下がった",
+                    "インフレでお金の価値が下がった",
+                    "インフレでお金の価値が上がった"
+                ],
+                answer: 3,
+                explanation: "ジュースが10本しか買えなくなるのは、物価が上がった（インフレ）のせいです。インフレではお金の価値が下がるため、同じ金額で買える量が減ります。"
+            },
+            {
+                question: "「預金通貨」に当てはまるものはどれか、正しいものを1つ選びなさい。",
+                choices: [
+                    "紙幣や硬貨",
+                    "銀行の普通預金や当座預金",
+                    "クレジットカード",
+                    "外国のお金（ドルやユーロ）"
+                ],
+                answer: 2,
+                explanation: "預金通貨は、銀行の普通預金や当座預金のことを指します。紙幣や硬貨は現金通貨です。"
+            },
+            {
+                question: "「価値尺度」とは何をする機能か、正しいものを1つ選びなさい。",
+                choices: [
+                    "お金を貯めておく機能",
+                    "モノやサービスの値段を測る基準になる機能",
+                    "借金やローンを支払う機能",
+                    "お金とモノを交換する機能"
+                ],
+                answer: 2,
+                explanation: "価値尺度は、モノやサービスの値段を測る基準になる機能です。例えば、「ジュースが120円」と価格をつけるのが価値尺度の役割です。"
+            },
+            {
+                question: "実際の取引でよく使われるのはどちらか、正しいものを1つ選びなさい。",
+                choices: [
+                    "現金通貨",
+                    "預金通貨",
+                    "どちらもほとんど使われない",
+                    "現金通貨だけが使われる"
+                ],
+                answer: 2,
+                explanation: "実際の取引では、カード払いや振り込みなどで使われる預金通貨の割合が多くなっています。"
+            },
+            {
+                question: "預金通貨として正しいものはどれか、正しいものを1つ選びなさい。",
+                choices: [
+                    "手元の1,000円札",
+                    "銀行口座の普通預金",
+                    "貯めておいた外国のお金（ドル）",
+                    "家の中で保管している硬貨"
+                ],
+                answer: 2,
+                explanation: "預金通貨は、銀行口座に記録されているお金です。紙幣や硬貨（現金通貨）は預金通貨ではありません。"
+            },
+            {
+                question: "借金やローンの返済に使われる通貨の機能を何というか、正しいものを1つ選びなさい。",
+                choices: [
+                    "価値尺度",
+                    "交換手段",
+                    "支払い手段",
+                    "価値貯蔵"
+                ],
+                answer: 3,
+                explanation: "支払い手段とは、借金やローンの返済などに使われる通貨の機能です。他の選択肢（価値尺度、交換手段、価値貯蔵）は別の機能を指します。"
+            }
+        ];
+
+        function loadQuestion() {
+            const questionElement = document.getElementById('question');
+            const choicesElements = document.querySelectorAll('#quiz-container ul li input');
+
+            const currentQuestion = questions[currentQuestionIndex];
+            questionElement.textContent = `Q. ${currentQuestion.question}`;
+            choicesElements.forEach((input, index) => {
+                input.nextSibling.textContent = ` ${currentQuestion.choices[index]}`;
+            });
+        }
+
+        function checkAnswer() {
+            const selectedAnswer = document.querySelector('input[name="answer"]:checked');
+            const resultElement = document.getElementById('result');
+            if (!selectedAnswer) {
+                resultElement.textContent = "回答を選んでください。";
+                return;
+            }
+
+            const userAnswer = parseInt(selectedAnswer.value);
+            const currentQuestion = questions[currentQuestionIndex];
+
+            if (userAnswer === currentQuestion.answer) {
+                correctAnswers++;
+                resultElement.textContent = `正解です！ 解説: ${currentQuestion.explanation}`;
+                document.getElementById('next-question').style.display = 'block';
+            } else {
+                resultElement.textContent = "不正解です。";
+            }
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex++;
+            if (currentQuestionIndex < questions.length) {
+                document.getElementById('next-question').style.display = 'none';
+                document.getElementById('result').textContent = '';
+                loadQuestion();
+            } else {
+                document.getElementById('quiz-container').innerHTML = `<p>${questions.length}問中${correctAnswers}問正解</p>`;
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', loadQuestion);
+        function goToIndex() {
+        window.location.href = '/TestApps2/index.html';
+    }
+    
+    function openText() {
+        window.open('https://drive.google.com/file/d/1BFGiPWZ06ZfH9vQbjjk1Aeea_2TiiRHN/view?usp=share_link', '_blank');
+    }
+    </script>
+</body>
+</html>
