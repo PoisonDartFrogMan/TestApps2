@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>インフレとデフレ - 練習問題</title>
+</head>
+<body>
+    <h2>インフレとデフレ - 練習問題</h2>
+
+    <button onclick="goToIndex()">目次</button>
+    <button onclick="openText()">テキスト</button>
+    
+    <div id="quiz-container">
+        <p id="question">Q. インフレが進むとどうなるか、正しいものを1つ選びなさい。</p>
+        <ul>
+            <li><input type="radio" name="answer" value="1"> 物価が下がり、お金の価値が上がる。</li>
+            <li><input type="radio" name="answer" value="2"> 物価が上がり、お金の価値が下がる。</li>
+            <li><input type="radio" name="answer" value="3"> 物価もお金の価値も両方上がる。</li>
+            <li><input type="radio" name="answer" value="4"> 物価が上がり、お金の価値が変わらない。</li>
+        </ul>
+        <input type="text" id="user-answer" placeholder="選択肢の番号を入力">
+        <button onclick="checkAnswer()">解答</button>
+        <p id="result"></p>
+        <button id="next-question" style="display: none;" onclick="nextQuestion()">次へ</button>
+    </div>
+
+    <script>
+        let currentQuestionIndex = 0;
+        let correctAnswers = 0;
+        const questions = [
+            {
+                question: "インフレが進むとどうなるか、正しいものを1つ選びなさい。",
+                choices: [
+                    "物価が下がり、お金の価値が上がる。",
+                    "物価が上がり、お金の価値が下がる。",
+                    "物価もお金の価値も両方上がる。",
+                    "物価が上がり、お金の価値が変わらない。"
+                ],
+                answer: 2,
+                explanation: "インフレとは、物価が上がってお金の価値が下がることです。たくさんのお金を出さないと同じものが買えなくなります。"
+            },
+            {
+                question: "1,000円で買えるジュースの本数が10本から5本に減った。この状態を何というか？",
+                choices: [
+                    "インフレーション",
+                    "デフレーション",
+                    "スタグフレーション",
+                    "デフレスパイラル"
+                ],
+                answer: 1,
+                explanation: "物価が上がり、1,000円で買えるものが減るのはインフレの特徴です。デフレは逆に物価が下がり、お金の価値が上がります。"
+            },
+            {
+                question: "インフレが進むと得をする人は誰か？正しいものを1つ選びなさい。",
+                choices: [
+                    "貯金をしている人",
+                    "借金をしている人",
+                    "物を買わない人",
+                    "給料が下がった人"
+                ],
+                answer: 2,
+                explanation: "インフレではお金の価値が下がるため、借金をしている人は実質的に返済の負担が軽くなります。貯金をしている人は逆に損をします。"
+            },
+            {
+                question: "デフレが進むと損をする人は誰か？正しいものを1つ選びなさい。",
+                choices: [
+                    "借金をしている人",
+                    "貯金をしている人",
+                    "物を買わない人",
+                    "物価に影響を受けない人"
+                ],
+                answer: 1,
+                explanation: "デフレではお金の価値が上がるため、借金をしている人は返済の負担が重くなります。貯金をしている人は得をします。"
+            },
+            {
+                question: "1,000円で20本のジュースが買えたが、今では10本しか買えなくなった。この場合、次のどれに当てはまるか？",
+                choices: [
+                    "デフレでお金の価値が上がった",
+                    "デフレでお金の価値が下がった",
+                    "インフレでお金の価値が下がった",
+                    "インフレでお金の価値が上がった"
+                ],
+                answer: 3,
+                explanation: "ジュースが10本しか買えなくなるのは、物価が上がった（インフレ）のせいです。インフレではお金の価値が下がるため、同じ金額で買える量が減ります。"
+            }
+        ];
+
+        function loadQuestion() {
+            const questionElement = document.getElementById('question');
+            const choicesElements = document.querySelectorAll('#quiz-container ul li input');
+
+            const currentQuestion = questions[currentQuestionIndex];
+            questionElement.textContent = `Q. ${currentQuestion.question}`;
+            choicesElements.forEach((input, index) => {
+                input.nextSibling.textContent = ` ${currentQuestion.choices[index]}`;
+            });
+        }
+
+        function checkAnswer() {
+            const userAnswer = parseInt(document.getElementById('user-answer').value);
+            const currentQuestion = questions[currentQuestionIndex];
+            const resultElement = document.getElementById('result');
+
+            if (userAnswer === currentQuestion.answer) {
+                correctAnswers++;
+                resultElement.textContent = `正解です！ 解説: ${currentQuestion.explanation}`;
+                document.getElementById('next-question').style.display = 'block';
+            } else {
+                resultElement.textContent = "不正解です。";
+            }
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex++;
+            if (currentQuestionIndex < questions.length) {
+                document.getElementById('next-question').style.display = 'none';
+                document.getElementById('result').textContent = '';
+                document.getElementById('user-answer').value = '';
+                loadQuestion();
+            } else {
+                document.getElementById('quiz-container').innerHTML = `<p>${questions.length}問中${correctAnswers}問正解</p>`;
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', loadQuestion);
+        function goToIndex() {
+        window.location.href = '/TestApps2/index.html';
+    }
+    
+    function openText() {
+        window.open('https://drive.google.com/file/d/1IoGFQ2DEsTIl-DsFiyFWdpcZBvimhp9z/view?usp=share_link', '_blank');
+    }
+    </script>
+</body>
+</html>
