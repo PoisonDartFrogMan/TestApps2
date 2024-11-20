@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>単元1: 経済システムの基礎 - 練習問題</title>
+</head>
+<body>
+    <h2>単元1: 経済システムの基礎 - 練習問題</h2>
+
+    <div id="quiz-container">
+        <p id="question">Q. GDP（国内総生産）について正しい説明を選びなさい。</p>
+        <ul>
+            <li><input type="radio" name="answer" value="1"> 国外で生産されたモノやサービスを含む。</li>
+            <li><input type="radio" name="answer" value="2"> 国内で生み出されたモノやサービスの合計金額である。</li>
+            <li><input type="radio" name="answer" value="3"> GDPはすべて物価変動を考慮して計算される。</li>
+            <li><input type="radio" name="answer" value="4"> GDPは個人の貯金額を示す指標である。</li>
+        </ul>
+        <input type="text" id="user-answer" placeholder="選択肢の番号を入力">
+        <button onclick="checkAnswer()">解答</button>
+        <p id="result"></p>
+        <button id="next-question" style="display: none;" onclick="nextQuestion()">次へ</button>
+    </div>
+
+    <script>
+        let currentQuestionIndex = 0;
+        let correctAnswers = 0;
+        const questions = [
+            {
+                question: "GDP（国内総生産）について正しい説明を選びなさい。",
+                choices: [
+                    "国外で生産されたモノやサービスを含む。",
+                    "国内で生み出されたモノやサービスの合計金額である。",
+                    "GDPはすべて物価変動を考慮して計算される。",
+                    "GDPは個人の貯金額を示す指標である。"
+                ],
+                answer: 2
+            },
+            {
+                question: "「有効求人倍率」が1.2である場合、次のうち正しい説明を選びなさい。",
+                choices: [
+                    "働きたい人1人に対して1.2件の求人があることを示す。",
+                    "仕事を探している人が1.2倍増えたことを示す。",
+                    "有効求人倍率が高いほど失業率も高いことを示す。",
+                    "有効求人倍率はGDPに直接影響しない。"
+                ],
+                answer: 1
+            },
+            {
+                question: "名目GDPと実質GDPの違いについて正しい説明を選びなさい。",
+                choices: [
+                    "名目GDPは物価変動を除いた指標である。",
+                    "実質GDPは物価の変動を考慮せず計算される。",
+                    "名目GDPはその年の価格を基に計算される。",
+                    "実質GDPは名目GDPの半分の値である。"
+                ],
+                answer: 3
+            },
+            {
+                question: "実質経済成長率を使う理由として正しいものを選びなさい。",
+                choices: [
+                    "国民の平均所得を測るため。",
+                    "名目GDPに比べて計算が簡単だから。",
+                    "物価変動の影響を取り除き、経済成長を正確に測るため。",
+                    "輸出量の変化を測るため。"
+                ],
+                answer: 3
+            },
+            {
+                question: "完全失業率が上昇することの意味として正しいものを選びなさい。",
+                choices: [
+                    "仕事を探している人が減っていることを意味する。",
+                    "仕事を探しても見つからない人が増えていることを意味する。",
+                    "失業している人の給料が増加していることを意味する。",
+                    "国民全体の収入が増えていることを意味する。"
+                ],
+                answer: 2
+            }
+        ];
+
+        function loadQuestion() {
+            const questionElement = document.getElementById('question');
+            const choicesElements = document.querySelectorAll('#quiz-container ul li input');
+
+            const currentQuestion = questions[currentQuestionIndex];
+            questionElement.textContent = `Q. ${currentQuestion.question}`;
+            choicesElements.forEach((input, index) => {
+                input.nextSibling.textContent = ` ${currentQuestion.choices[index]}`;
+            });
+        }
+
+        function checkAnswer() {
+            const userAnswer = parseInt(document.getElementById('user-answer').value);
+            const currentQuestion = questions[currentQuestionIndex];
+            const resultElement = document.getElementById('result');
+
+            if (userAnswer === currentQuestion.answer) {
+                correctAnswers++;
+                resultElement.textContent = "正解です！";
+                document.getElementById('next-question').style.display = 'block';
+            } else {
+                resultElement.textContent = "不正解です。";
+            }
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex++;
+            if (currentQuestionIndex < questions.length) {
+                document.getElementById('next-question').style.display = 'none';
+                document.getElementById('result').textContent = '';
+                document.getElementById('user-answer').value = '';
+                loadQuestion();
+            } else {
+                document.getElementById('quiz-container').innerHTML = `<p>${questions.length}問中${correctAnswers}問正解</p>`;
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', loadQuestion);
+    </script>
+</body>
+</html>
