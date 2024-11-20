@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>金融の仕組みと機能①</title>
+</head>
+<body>
+    <h2>金融 - 練習問題</h2>
+
+    <button onclick="goToIndex()">目次</button>
+    <button onclick="openText()">テキスト</button>
+    
+    <div id="quiz-container">
+        <p id="question">Q1. 金融の仕組みについて、以下の選択肢から正しいものを選びなさい。</p>
+        <ul>
+            <li><input type="radio" name="answer" value="1"> お金を貯めるための仕組み</li>
+            <li><input type="radio" name="answer" value="2"> お金を稼ぐための仕組み</li>
+            <li><input type="radio" name="answer" value="3"> お金を余っている人と足りない人の間でやり取りする仕組み</li>
+            <li><input type="radio" name="answer" value="4"> 中央銀行が紙幣を管理する仕組み</li>
+        </ul>
+        <button onclick="checkAnswer()">解答</button>
+        <p id="result"></p>
+        <button id="next-question" style="display: none;" onclick="nextQuestion()">次へ</button>
+    </div>
+
+    <script>
+        let currentQuestionIndex = 0;
+        let correctAnswers = 0;
+        const questions = [
+            {
+                question: "金融の仕組みについて、以下の選択肢から正しいものを選びなさい。",
+                choices: [
+                    "お金を貯めるための仕組み",
+                    "お金を稼ぐための仕組み",
+                    "お金を余っている人と足りない人の間でやり取りする仕組み",
+                    "中央銀行が紙幣を管理する仕組み"
+                ],
+                answer: 3,
+                explanation: "金融は、お金が「余っている人」と「足りない人」をつなぐ仕組みです。銀行を通じて行われることが多いです。"
+            },
+            {
+                question: "次の中で、直接金融の具体例として正しいものを選びなさい。",
+                choices: [
+                    "銀行から住宅ローンを借りる",
+                    "会社が株を発行してお金を集める",
+                    "クレジットカードで支払う",
+                    "銀行に預金する"
+                ],
+                answer: 2,
+                explanation: "直接金融では、会社が株や債券を発行して直接お金を集めます。銀行を介さないのが特徴です。"
+            },
+            {
+                question: "間接金融とは何か？以下の選択肢から正しい説明を選びなさい。",
+                choices: [
+                    "銀行が預金者から集めたお金を必要な人に貸す仕組み",
+                    "株や債券を売って直接お金を集める仕組み",
+                    "中央銀行が通貨を管理する仕組み",
+                    "国が税金を集めて運用する仕組み"
+                ],
+                answer: 1,
+                explanation: "間接金融では、銀行が預金者からお金を集め、それを必要な人に貸す仕組みです。"
+            },
+            {
+                question: "お金の歴史の中で、物々交換から金属（例：金や銀）が使われるようになった理由として正しいものを選びなさい。",
+                choices: [
+                    "金属は腐らず、価値が安定していたから",
+                    "物々交換は便利だったから",
+                    "金属は持ち運びやすかったから",
+                    "物々交換では金属が必要だったから"
+                ],
+                answer: 1,
+                explanation: "物々交換では価値が不安定で腐りやすかったため、金属のような価値が安定したものが使われるようになりました。"
+            },
+            {
+                question: "銀行が「預かり証」を発行するようになった結果、紙幣が生まれました。この紙幣の価値は何を基準としていたか？",
+                choices: [
+                    "預かった金や銀",
+                    "銀行の信用",
+                    "借り手の返済能力",
+                    "国の法律"
+                ],
+                answer: 1,
+                explanation: "紙幣は、銀行に預けられた金や銀を基準に発行されていました。"
+            },
+            {
+                question: "金本位制の特徴として正しいものを選びなさい。",
+                choices: [
+                    "紙幣を金と交換できたが、発行量が金の量に制限された",
+                    "紙幣は自由に発行でき、金とは交換できなかった",
+                    "中央銀行が金に関係なく紙幣を発行する制度",
+                    "紙幣の価値は物価によって決まった"
+                ],
+                answer: 1,
+                explanation: "金本位制では、紙幣を金と交換でき、発行量は金の量に制限されていました。"
+            },
+            {
+                question: "管理通貨制度について正しい説明を選びなさい。",
+                choices: [
+                    "金を基準にして紙幣を発行する制度",
+                    "中央銀行が紙幣を管理し、金と関係なく発行できる制度",
+                    "国が税金を基に紙幣を発行する制度",
+                    "銀行が紙幣の発行量を決める制度"
+                ],
+                answer: 2,
+                explanation: "管理通貨制度では、中央銀行が金に関係なく紙幣の発行量を管理します。"
+            },
+            {
+                question: "証券市場において、会社が資金を集めるために行うこととして正しいものを選びなさい。",
+                choices: [
+                    "銀行に借金をする",
+                    "株式や債券を発行する",
+                    "クレジットカードを利用する",
+                    "株式や債券を買う"
+                ],
+                answer: 2,
+                explanation: "証券市場では、会社が株式や債券を発行して資金を集めます。"
+            },
+            {
+                question: "株式と債券の違いについて正しい説明を選びなさい。",
+                choices: [
+                    "株式は借金、債券は投資である",
+                    "株式は返済不要、債券は利子をつけて返済する必要がある",
+                    "株式と債券はどちらも返済が必要である",
+                    "株式は利子がつくが、債券は配当がある"
+                ],
+                answer: 2,
+                explanation: "株式は返済不要ですが、会社が利益を出した際に配当を受け取ります。債券はお金を貸した形になるため、一定期間後に利子付きで返済されます。"
+            },
+            {
+                question: "次の計算問題を解きなさい。\n100万円の株を購入し、1年間で3万円の配当を得ました。この株の利回りを計算しなさい。",
+                choices: [
+                    "1%",
+                    "2%",
+                    "3%",
+                    "4%"
+                ],
+                answer: 3,
+                explanation: "利回りは「利益 ÷ 購入額 × 100」で計算します。3万円 ÷ 100万円 × 100 = 3% となります。"
+            }
+        ];
+
+        function loadQuestion() {
+            const questionElement = document.getElementById('question');
+            const choicesElements = document.querySelectorAll('#quiz-container ul li input');
+
+            const currentQuestion = questions[currentQuestionIndex];
+            questionElement.textContent = `Q${currentQuestionIndex + 1}. ${currentQuestion.question}`;
+            choicesElements.forEach((input, index) => {
+                input.nextSibling.textContent = ` ${currentQuestion.choices[index]}`;
+            });
+        }
+
+        function checkAnswer() {
+            const selectedAnswer = document.querySelector('input[name="answer"]:checked');
+            const resultElement = document.getElementById('result');
+            if (!selectedAnswer) {
+                resultElement.textContent = "回答を選んでください。";
+                return;
+            }
+
+            const userAnswer = parseInt(selectedAnswer.value);
+            const currentQuestion = questions[currentQuestionIndex];
+
+            if (userAnswer === currentQuestion.answer) {
+                correctAnswers++;
+                resultElement.textContent = `正解です！ 解説: ${currentQuestion.explanation}`;
+                document.getElementById('next-question').style.display = 'block';
+            } else {
+                resultElement.textContent = "不正解です。";
+            }
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex++;
+            if (currentQuestionIndex < questions.length) {
+                document.getElementById('next-question').style.display = 'none';
+                document.getElementById('result').textContent = '';
+                loadQuestion();
+            } else {
+                document.getElementById('quiz-container').innerHTML = `<p>${questions.length}問中${correctAnswers}問正解</p>`;
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', loadQuestion);
+        function goToIndex() {
+        window.location.href = '/TestApps2/index.html';
+    }
+    
+    function openText() {
+        window.open('https://drive.google.com/file/d/1wcci7twZ33efKAhFG0J1Yxqmdpb93ASR/view?usp=share_link', '_blank');
+    }
+    </script>
+</body>
+</html>
