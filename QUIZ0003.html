@@ -1,1 +1,161 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>テスト対策用問題</title>
+</head>
+<body>
+    <h2>テスト対策用問題 - 練習問題</h2>
+
+    <button onclick="goToIndex()">目次</button>
+    
+    <div id="quiz-container">
+        <p id="question">Q1. アメリカ大統領選挙でドナルド・トランプ氏が再選された理由として正しいものを選びなさい。</p>
+        <ul>
+            <li><input type="radio" name="answer" value="1"> アメリカ第一主義を掲げ、国内産業の振興を訴えた</li>
+            <li><input type="radio" name="answer" value="2"> 初の女性大統領として選ばれた</li>
+            <li><input type="radio" name="answer" value="3"> 環境問題への強い政策を打ち出した</li>
+            <li><input type="radio" name="answer" value="4"> TPP再加入を公約にした</li>
+        </ul>
+        <button onclick="checkAnswer()">解答</button>
+        <p id="result"></p>
+        <button id="next-question" style="display: none;" onclick="nextQuestion()">次へ</button>
+    </div>
+
+    <script>
+        let currentQuestionIndex = 0;
+        let correctAnswers = 0;
+        const questions = [
+            {
+                question: "アメリカ大統領選挙でドナルド・トランプ氏が再選された理由として正しいものを選びなさい。",
+                choices: [
+                    "アメリカ第一主義を掲げ、国内産業の振興を訴えた",
+                    "初の女性大統領として選ばれた",
+                    "環境問題への強い政策を打ち出した",
+                    "TPP再加入を公約にした"
+                ],
+                answer: 1,
+                explanation: "トランプ氏は再選に向けて「アメリカ第一主義」を掲げ、国内経済や雇用を重視する政策を主張しました。これが多くの支持を得る要因となりました。"
+            },
+            {
+                question: "イギリス総選挙で労働党が掲げた主要な政策はどれですか？",
+                choices: [
+                    "経済成長の重視と企業減税",
+                    "社会福祉の充実と格差の解消",
+                    "国防費の大幅増加",
+                    "EU再加盟の実施"
+                ],
+                answer: 2,
+                explanation: "イギリス総選挙では労働党が福祉重視の政策を掲げ、大勝利を収めました。保守党の経済重視政策とは対照的な内容です。"
+            },
+            {
+                question: "ウクライナとロシアの戦争が続く中、国際社会が行っている主な対応はどれですか？",
+                choices: [
+                    "ウクライナへの経済制裁",
+                    "ロシアへの経済制裁とウクライナへの人道支援",
+                    "ロシアとウクライナ双方への武器供給",
+                    "ロシアへの全面的な経済支援"
+                ],
+                answer: 2,
+                explanation: "国際社会はロシアへの経済制裁を強化し、ウクライナに対して人道支援や軍事支援を行っています。"
+            },
+            {
+                question: "北朝鮮がロシアとの軍事同盟を強化する理由として正しいものを選びなさい。",
+                choices: [
+                    "NATOの支援を受けるため",
+                    "経済支援や武器取引を求めているため",
+                    "中国との同盟を解消したため",
+                    "国連の支持を得るため"
+                ],
+                answer: 2,
+                explanation: "北朝鮮はロシアへの支援を通じて経済的利益や武器取引を拡大したいと考えています。"
+            },
+            {
+                question: "ガザ地区での戦闘が中東情勢に与える影響として適切なものを選びなさい。",
+                choices: [
+                    "エネルギー価格への影響はない",
+                    "中東地域の安定を促進する",
+                    "エネルギー価格の高騰や国際社会の安全保障に影響する",
+                    "国際社会にほとんど影響を与えない"
+                ],
+                answer: 3,
+                explanation: "ガザ地区での戦闘は中東の安定を揺るがし、エネルギー価格や国際社会全体の安全保障に影響を与えています。"
+            },
+            {
+                question: "アメリカ大統領選挙の仕組みで正しいものを選びなさい。",
+                choices: [
+                    "国民の直接投票によって大統領が決まる",
+                    "選挙人制度による間接選挙で大統領が決まる",
+                    "州知事が決定する",
+                    "連邦議会が大統領を選ぶ"
+                ],
+                answer: 2,
+                explanation: "アメリカの大統領選挙は州ごとの選挙人による間接選挙の仕組みです。国民の直接投票ではありません。"
+            },
+            {
+                question: "イギリスの議院内閣制の特徴として正しいものを選びなさい。",
+                choices: [
+                    "国民が直接首相を選ぶ",
+                    "議会と内閣が密接に関係している",
+                    "大統領が議会の承認を得る必要がない",
+                    "内閣は国王によって選ばれる"
+                ],
+                answer: 2,
+                explanation: "イギリスの議院内閣制は、議会の多数派が内閣を構成し、議会と内閣が密接に連携しています。"
+            },
+            {
+                question: "ロシアとウクライナの戦争の原因として適切なものを選びなさい。",
+                choices: [
+                    "ロシアによるNATO加盟国への侵攻",
+                    "NATOの東方拡大問題やウクライナのNATO加盟志向",
+                    "ウクライナによるロシア国内への軍事侵攻",
+                    "ロシアの国際経済制裁への対抗"
+                ],
+                answer: 2,
+                explanation: "ロシアのウクライナ侵攻は、NATOの東方拡大やウクライナの加盟希望が背景にあります。"
+            },
+            {
+                question: "北朝鮮とロシアの軍事協力が日本に与える影響として適切なものを選びなさい。",
+                choices: [
+                    "核問題の進展が期待される",
+                    "東アジア地域の安全保障がさらに不安定になる",
+                    "日本のエネルギー供給が増加する",
+                    "日本への影響はない"
+                ],
+                answer: 2,
+                explanation: "北朝鮮とロシアの軍事協力は、日本や韓国を含む東アジア地域の安全保障に大きな影響を与えます。"
+            },
+            {
+                question: "ガザ戦闘とパレスチナ問題について正しい説明を選びなさい。",
+                choices: [
+                    "ガザ地区はイスラエルの主要都市である",
+                    "パレスチナ問題は中東地域の安定に関わる長年の課題である",
+                    "パレスチナ問題は解決済みの問題である",
+                    "国際社会はこの問題にほとんど関与していない"
+                ],
+                answer: 2,
+                explanation: "パレスチナ問題は中東地域の安定に直結する長期的な課題であり、国際社会も和平解決に向けた取り組みを続けています。"
+            }
+        ];
+
+        function loadQuestion() {
+            const questionElement = document.getElementById('question');
+            const choicesElements = document.querySelectorAll('#quiz-container ul li input');
+
+            const currentQuestion = questions[currentQuestionIndex];
+            questionElement.textContent = `Q${currentQuestionIndex + 1}. ${currentQuestion.question}`;
+            choicesElements.forEach((input, index) => {
+                input.nextSibling.textContent = ` ${currentQuestion.choices[index]}`;
+            });
+        }
+
+        function checkAnswer() {
+            const selectedAnswer = document.querySelector('input[name="answer"]:checked');
+            const resultElement = document.getElementById('result');
+            if (!selectedAnswer) {
+                resultElement.textContent = "回答を選んでください。";
+                return;
+            }
+
 
