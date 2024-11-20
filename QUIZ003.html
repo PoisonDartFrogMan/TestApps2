@@ -3,21 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>金融の自由化 (近年の金融政策)②</title>
+    <title>金融の仕組みと機能①</title>
 </head>
 <body>
-    <h2>インフレとデフレ - 練習問題</h2>
+    <h2>通貨と金融 - 練習問題</h2>
 
     <button onclick="goToIndex()">目次</button>
     <button onclick="openText()">テキスト</button>
     
     <div id="quiz-container">
-        <p id="question">Q. インフレが進むとどうなるか、正しいものを1つ選びなさい。</p>
+        <p id="question">Q. 「預金通貨」に当てはまるものはどれか、正しいものを1つ選びなさい。</p>
         <ul>
-            <li><input type="radio" name="answer" value="1"> 物価が下がり、お金の価値が上がる。</li>
-            <li><input type="radio" name="answer" value="2"> 物価が上がり、お金の価値が下がる。</li>
-            <li><input type="radio" name="answer" value="3"> 物価もお金の価値も両方上がる。</li>
-            <li><input type="radio" name="answer" value="4"> 物価が上がり、お金の価値が変わらない。</li>
+            <li><input type="radio" name="answer" value="1"> 紙幣や硬貨</li>
+            <li><input type="radio" name="answer" value="2"> 銀行の普通預金や当座預金</li>
+            <li><input type="radio" name="answer" value="3"> クレジットカード</li>
+            <li><input type="radio" name="answer" value="4"> 外国のお金（ドルやユーロ）</li>
         </ul>
         <button onclick="checkAnswer()">解答</button>
         <p id="result"></p>
@@ -28,61 +28,6 @@
         let currentQuestionIndex = 0;
         let correctAnswers = 0;
         const questions = [
-            {
-                question: "インフレが進むとどうなるか、正しいものを1つ選びなさい。",
-                choices: [
-                    "物価が下がり、お金の価値が上がる。",
-                    "物価が上がり、お金の価値が下がる。",
-                    "物価もお金の価値も両方上がる。",
-                    "物価が上がり、お金の価値が変わらない。"
-                ],
-                answer: 2,
-                explanation: "インフレとは、物価が上がってお金の価値が下がることです。たくさんのお金を出さないと同じものが買えなくなります。"
-            },
-            {
-                question: "1,000円で買えるジュースの本数が10本から5本に減った。この状態を何というか？",
-                choices: [
-                    "インフレーション",
-                    "デフレーション",
-                    "スタグフレーション",
-                    "デフレスパイラル"
-                ],
-                answer: 1,
-                explanation: "物価が上がり、1,000円で買えるものが減るのはインフレの特徴です。デフレは逆に物価が下がり、お金の価値が上がります。"
-            },
-            {
-                question: "インフレが進むと得をする人は誰か？正しいものを1つ選びなさい。",
-                choices: [
-                    "貯金をしている人",
-                    "借金をしている人",
-                    "物を買わない人",
-                    "給料が下がった人"
-                ],
-                answer: 2,
-                explanation: "インフレではお金の価値が下がるため、借金をしている人は実質的に返済の負担が軽くなります。貯金をしている人は逆に損をします。"
-            },
-            {
-                question: "デフレが進むと損をする人は誰か？正しいものを1つ選びなさい。",
-                choices: [
-                    "借金をしている人",
-                    "貯金をしている人",
-                    "物を買わない人",
-                    "物価に影響を受けない人"
-                ],
-                answer: 1,
-                explanation: "デフレではお金の価値が上がるため、借金をしている人は返済の負担が重くなります。貯金をしている人は得をします。"
-            },
-            {
-                question: "1,000円で20本のジュースが買えたが、今では10本しか買えなくなった。この場合、次のどれに当てはまるか？",
-                choices: [
-                    "デフレでお金の価値が上がった",
-                    "デフレでお金の価値が下がった",
-                    "インフレでお金の価値が下がった",
-                    "インフレでお金の価値が上がった"
-                ],
-                answer: 3,
-                explanation: "ジュースが10本しか買えなくなるのは、物価が上がった（インフレ）のせいです。インフレではお金の価値が下がるため、同じ金額で買える量が減ります。"
-            },
             {
                 question: "「預金通貨」に当てはまるものはどれか、正しいものを1つ選びなさい。",
                 choices: [
