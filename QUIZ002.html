@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>インフレとデフレ - 練習問題</title>
+    <title>金融の自由化 (近年の金融政策)②</title>
 </head>
 <body>
     <h2>インフレとデフレ - 練習問題</h2>
@@ -19,7 +19,6 @@
             <li><input type="radio" name="answer" value="3"> 物価もお金の価値も両方上がる。</li>
             <li><input type="radio" name="answer" value="4"> 物価が上がり、お金の価値が変わらない。</li>
         </ul>
-        <input type="text" id="user-answer" placeholder="選択肢の番号を入力">
         <button onclick="checkAnswer()">解答</button>
         <p id="result"></p>
         <button id="next-question" style="display: none;" onclick="nextQuestion()">次へ</button>
@@ -98,9 +97,15 @@
         }
 
         function checkAnswer() {
-            const userAnswer = parseInt(document.getElementById('user-answer').value);
-            const currentQuestion = questions[currentQuestionIndex];
+            const selectedAnswer = document.querySelector('input[name="answer"]:checked');
             const resultElement = document.getElementById('result');
+            if (!selectedAnswer) {
+                resultElement.textContent = "回答を選んでください。";
+                return;
+            }
+
+            const userAnswer = parseInt(selectedAnswer.value);
+            const currentQuestion = questions[currentQuestionIndex];
 
             if (userAnswer === currentQuestion.answer) {
                 correctAnswers++;
@@ -116,7 +121,6 @@
             if (currentQuestionIndex < questions.length) {
                 document.getElementById('next-question').style.display = 'none';
                 document.getElementById('result').textContent = '';
-                document.getElementById('user-answer').value = '';
                 loadQuestion();
             } else {
                 document.getElementById('quiz-container').innerHTML = `<p>${questions.length}問中${correctAnswers}問正解</p>`;
