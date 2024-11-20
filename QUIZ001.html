@@ -3,11 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>単元1: 経済システムの基礎 - 練習問題</title>
+    <title>経済成長と景気変動① - 練習問題</title>
 </head>
 <body>
-    <h2>単元1: 経済システムの基礎 - 練習問題</h2>
+    <h2>経済成長と景気変動① - 練習問題</h2>
 
+    <button onclick="goToIndex()">目次</button>
+    <button onclick="openText()">テキスト</button>
+    
     <div id="quiz-container">
         <p id="question">Q. GDP（国内総生産）について正しい説明を選びなさい。</p>
         <ul>
@@ -116,6 +119,13 @@
         }
 
         document.addEventListener('DOMContentLoaded', loadQuestion);
+        function goToIndex() {
+        window.location.href = '/TestApps2/index.html';
+    }
+    
+    function openText() {
+        window.open('https://drive.google.com/file/d/1sOjq1wZWAFxEhI8UKDLWxA4VKjNYNCXM/view?usp=share_link', '_blank');
+    }
     </script>
 </body>
 </html>
