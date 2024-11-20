@@ -37,7 +37,8 @@
                     "GDPはすべて物価変動を考慮して計算される。",
                     "GDPは個人の貯金額を示す指標である。"
                 ],
-                answer: 2
+                answer: 2,
+                explanation: "国内で生み出されたモノやサービスの合計金額である。"
             },
             {
                 question: "「有効求人倍率」が1.2である場合、次のうち正しい説明を選びなさい。",
@@ -47,7 +48,8 @@
                     "有効求人倍率が高いほど失業率も高いことを示す。",
                     "有効求人倍率はGDPに直接影響しない。"
                 ],
-                answer: 1
+                answer: 1,
+                explanation: "働きたい人1人に対して1.2件の求人があることを示す。"
             },
             {
                 question: "名目GDPと実質GDPの違いについて正しい説明を選びなさい。",
@@ -57,7 +59,8 @@
                     "名目GDPはその年の価格を基に計算される。",
                     "実質GDPは名目GDPの半分の値である。"
                 ],
-                answer: 3
+                answer: 3,
+                explanation: "名目GDPはその年の価格を基に計算される。"
             },
             {
                 question: "実質経済成長率を使う理由として正しいものを選びなさい。",
@@ -67,7 +70,8 @@
                     "物価変動の影響を取り除き、経済成長を正確に測るため。",
                     "輸出量の変化を測るため。"
                 ],
-                answer: 3
+                answer: 3,
+                explanation: "物価変動の影響を取り除き、経済成長を正確に測るため。"
             },
             {
                 question: "完全失業率が上昇することの意味として正しいものを選びなさい。",
@@ -77,7 +81,8 @@
                     "失業している人の給料が増加していることを意味する。",
                     "国民全体の収入が増えていることを意味する。"
                 ],
-                answer: 2
+                answer: 2,
+                explanation: "仕事を探しても見つからない人が増えていることを意味する。"
             }
         ];
 
@@ -99,7 +104,7 @@
 
             if (userAnswer === currentQuestion.answer) {
                 correctAnswers++;
-                resultElement.textContent = "正解です！";
+                resultElement.textContent = `正解です！ 解説: ${currentQuestion.explanation}`;
                 document.getElementById('next-question').style.display = 'block';
             } else {
                 resultElement.textContent = "不正解です。";
